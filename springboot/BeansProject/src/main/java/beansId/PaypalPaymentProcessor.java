@@ -15,7 +15,7 @@ public class PaypalPaymentProcessor  implements PaymentProcessor{
         double fee = amount * feePercentage/100;
         double totalCharge = amount + fee;
 
-        System.out.println("payment process Amount" + amount);
+        System.out.println("PayPal payment process Amount" + amount);
         System.out.println(" FeePercentage " + feePercentage + "%");
         System.out.println("Transaction Fee: " + fee);
         System.out.println("Total Charge " + totalCharge);

@@ -10,6 +10,6 @@ public class DevNotificationService implements NotificationService {
 
     @Override
     public void sendNotification(String message) {
-        System.out.println("DevNotificationService.sendNotification" + message);
+        System.out.println("Development notification profile activated" + message);
     }
 }

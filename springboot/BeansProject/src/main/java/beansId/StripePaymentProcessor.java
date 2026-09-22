@@ -17,7 +17,7 @@ public class StripePaymentProcessor implements PaymentProcessor {
         double fee = amount * feePercentage / 100;
         double totalCharge = amount + fee;
 
-        System.out.println("PayPal Payment");
+        System.out.println("Stripe Payment");
         System.out.println("Amount: " + amount);
         System.out.println("Fee: " + feePercentage + "%");
         System.out.println("Transaction Fee: " + fee);

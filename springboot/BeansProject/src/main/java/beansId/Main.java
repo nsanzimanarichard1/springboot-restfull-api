@@ -10,14 +10,16 @@ import org.springframework.context.annotation.Bean;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 @SpringBootApplication
 public class Main {
-    public static void main(String[] args) {
+     static void main(String[] args) {
 
         SpringApplication.run(Main.class, args);
 
     }
 
     @Bean
-    public CommandLineRunner testPayment(PaypalPaymentProcessor paypal){
-        return args -> {paypal.process(100.0);};
+    CommandLineRunner order(OrderService orderService) {
+        return _ -> {
+            orderService.checkout(100);
+        };
     }
 }
