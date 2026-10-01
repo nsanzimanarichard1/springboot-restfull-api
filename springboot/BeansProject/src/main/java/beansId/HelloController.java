@@ -1,9 +1,6 @@
 package beansId;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1") // Base path for all methods in this controller
@@ -22,9 +19,10 @@ public class HelloController {
     }
 
 
-    @GetMapping("/post")
-    public String create(@RequestBody String massgae){
-        return massgae;
+    @PostMapping("/post")
+    public String create(@RequestBody String message)
+    {
+        return "your message is " + message;
 
     }
 
