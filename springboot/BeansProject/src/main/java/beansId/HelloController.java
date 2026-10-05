@@ -42,4 +42,15 @@ public class HelloController {
     }
 
 
+
+    // Maps to: GET http://localhost:8080/api/v1/hello
+    @GetMapping("/firsName&lastName")
+    public String filteringAndPagination(
+            @RequestParam("firstName") String firstName,
+            @RequestParam ("lastName") String lastName
+    ) {
+
+
+        return "Your name is:" +firstName + " " + lastName;
+    }
 }
