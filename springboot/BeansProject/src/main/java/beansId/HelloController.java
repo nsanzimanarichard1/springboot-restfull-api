@@ -34,7 +34,12 @@ public class HelloController {
         return  ResponseEntity.ok(order);
     }
 
+    // java record
 
+    @PostMapping("/create-order-record")
+    public ResponseEntity<OrderRecord> CreateOrderRecord(@RequestBody OrderRecord order){
+        return ResponseEntity.ok(order);
+    }
 
 
 }
