@@ -4,7 +4,7 @@ public class Order {
 
     private  String productName;
     private  String productDescription;
-    private  String productPrice;
+    private  double productPrice;
 
 
 
@@ -17,33 +17,43 @@ public class Order {
     }
 
     //constructor
-    public Order(String productName, String productDescription, String productPrice){
+    public Order(String productName, String productDescription, double productPrice){
         this.productName = productName;
         this.productDescription = productDescription;
         this.productPrice = productPrice;
     }
 
     // setter method which deserialize incoming data
+
     public void setProductName(String productName){
+
         this.productName = productName;
     };
+
     public void setProductDescription(String productDescription){
+
         this.productDescription = productDescription;
-    }
-    public void setProductPrice(String productPrice){
+    };
+
+
+    public void setProductPrice(double productPrice){
         this.productPrice = productPrice;
     }
 
 
     // getter method which deserialize outgoing data
      public String getProductName() {
+
         return productName;
      }
+
      public String getProductDescription(){
+
         return  productDescription;
      }
 
-     public String getProductPrice(){
+     public double getProductPrice(){
+
         return  productPrice;
      }
 

@@ -1,5 +1,6 @@
 package beansId;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,6 +25,13 @@ public class HelloController {
     {
         return "your message is " + message;
 
+    }
+
+    // create order by post http://localhost:8080/api/v1/create-order
+    @PostMapping("/create-order")
+    public ResponseEntity<Order> CreateOrder(@RequestBody Order order){
+
+        return  ResponseEntity.ok(order);
     }
 
 
