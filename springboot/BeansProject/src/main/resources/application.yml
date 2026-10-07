@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url:  jdbc:postgres://localhost:5432/school
+    username: postgres
+    password: 1234
+    driver-class-name:  org.pstgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: true
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
