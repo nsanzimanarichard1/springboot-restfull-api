@@ -19,7 +19,9 @@ public class Main {
     @Bean
     CommandLineRunner order(OrderService orderService) {
         return _ -> {
-            orderService.checkout(100);
+          Student student = new Student("Richard", "Nsanzimana", "richard@example.com", 22);
+
+
         };
     }
 }
