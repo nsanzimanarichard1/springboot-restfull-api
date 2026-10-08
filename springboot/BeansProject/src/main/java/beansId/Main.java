@@ -5,22 +5,27 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 @SpringBootApplication
 public class Main {
-     static void main(String[] args) {
+
+    public static void main(String[] args) {
 
         SpringApplication.run(Main.class, args);
 
     }
 
     @Bean
-    CommandLineRunner order(OrderService orderService) {
+    CommandLineRunner order(StudentRepository studentRepository) {
         return _ -> {
-          Student student = new Student("Richard", "Nsanzimana", "richard@example.com", 22);
 
+            Student student = new Student(
+                    "Richard",
+                    "Nsanzimana",
+                    "richard@example.com",
+                    22
+            );
+
+            studentRepository.save(student);
 
         };
     }
