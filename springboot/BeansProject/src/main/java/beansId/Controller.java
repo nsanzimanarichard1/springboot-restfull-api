@@ -5,7 +5,14 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1") // Base path for all methods in this controller
-public class HelloController {
+public class Controller {
+
+    private  final StudentRepository studentRepository;
+
+    public Controller(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
+
 
     // Maps to: GET http://localhost:8080/api/v1
     @GetMapping
@@ -52,5 +59,22 @@ public class HelloController {
 
 
         return "Your name is:" +firstName + " " + lastName;
+    }
+
+
+
+    // student manipulation data
+    @PostMapping("/student")
+    public Student createStudent(@RequestBody Student student){
+
+        Student student1 = studentRepository.save(student);
+        System.out.println("student id is:  " + student1.getId());
+        System.out.println("student firstname is:  " + student1.getFirstname());
+        System.out.println("student lastname is " + student1.getLastname());
+        System.out.println("student email is:  " + student1.getEmail());
+        System.out.println("Student age is: " + student1.getAge());
+        return student1;
+
+
     }
 }

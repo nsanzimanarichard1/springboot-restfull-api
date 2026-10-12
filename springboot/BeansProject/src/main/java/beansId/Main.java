@@ -14,19 +14,5 @@ public class Main {
 
     }
 
-    @Bean
-    CommandLineRunner order(StudentRepository studentRepository) {
-        return _ -> {
 
-            Student student = new Student(
-                    "Richard",
-                    "Nsanzimana",
-                    "richard@example.com",
-                    22
-            );
-
-            studentRepository.save(student);
-
-        };
-    }
 }
