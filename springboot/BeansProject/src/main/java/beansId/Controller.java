@@ -3,6 +3,8 @@ package beansId;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1") // Base path for all methods in this controller
 public class Controller {
@@ -75,6 +77,54 @@ public class Controller {
         System.out.println("Student age is: " + student1.getAge());
         return student1;
 
+    }
 
+    // GetAll Student
+    @GetMapping("/student/{id}")
+    public Student getStudentById( @PathVariable Integer id){
+        return studentRepository.findById(id).orElseThrow(() -> new RuntimeException("student with that id does not exist: " + id));
+    }
+
+    // getAll student
+    @GetMapping("/students")
+    public List<Student> getAllStudent(){
+        return  studentRepository.findAll();
+    }
+
+    // Update Student by id
+
+    @PatchMapping("/update/student/{id}")
+    public Student updateStudent(@PathVariable Integer id, @RequestBody Student student){
+        Student doesExist =  studentRepository.findById(id)
+                .orElseThrow(
+                () -> new RuntimeException("student with that id does not exist: " + id)
+        );
+
+        if (student.getFirstname()!=null){
+            doesExist.setFirstname(student.getFirstname());
+        }
+
+        if (student.getLastname()!=null){
+            doesExist.setLastname(student.getLastname());
+        }
+        if (student.getEmail()!=null){
+            doesExist.setEmail(student.getEmail());
+        }
+        if (student.getAge()!=null){
+            doesExist.setAge(student.getAge());
+        }
+
+
+        return  studentRepository.save(doesExist);
+    }
+
+    // delete student by id
+    @DeleteMapping("/delete/student/{id}")
+    public String deleteStudent(@PathVariable Integer id){
+        Student student = studentRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("student with that id does not exist: " + id)
+        );
+        studentRepository.delete(student);
+        return "Student with ID " + id + " deleted successfully";
     }
 }
