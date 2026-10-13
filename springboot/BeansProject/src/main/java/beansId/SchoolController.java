@@ -3,6 +3,8 @@ package beansId;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/school")
 public class SchoolController {
@@ -18,5 +20,11 @@ public class SchoolController {
         return schoolRepository.save(school);
 
 
+    }
+
+    // getall school
+    @GetMapping("/")
+    public List<School> getSchools() {
+        return schoolRepository.findAll();
     }
 }
