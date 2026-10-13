@@ -23,7 +23,14 @@ public class Student {
     @Column(name = "age")
     private Integer age;
 
+    //foreign key from school table
+    @ManyToOne
+    @JoinColumn(name = "school_id")
+    private School school;
 
+    //Relation with studentProfile
+    @OneToOne( mappedBy = "studentProfile", cascade = CascadeType.ALL)
+    private StudentProfile studentProfile;
 
     public Student() {}
 

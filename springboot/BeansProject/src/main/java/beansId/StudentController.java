@@ -7,11 +7,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1") // Base path for all methods in this controller
-public class Controller {
+public class StudentController {
 
     private  final StudentRepository studentRepository;
 
-    public Controller(StudentRepository studentRepository) {
+    public StudentController(StudentRepository studentRepository)
+    {
         this.studentRepository = studentRepository;
     }
 
