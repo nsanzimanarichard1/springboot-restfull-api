@@ -1,6 +1,8 @@
 package beansId;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 
@@ -26,6 +28,7 @@ public class Student {
     //foreign key from school table
     @ManyToOne
     @JoinColumn(name = "school_id")
+    @JsonBackReference
     private School school;
 
     //Relation with studentProfile
