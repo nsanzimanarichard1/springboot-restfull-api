@@ -33,6 +33,7 @@ public class Student {
 
     //Relation with studentProfile
     @OneToOne( mappedBy = "studentProfile", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private StudentProfile studentProfile;
 
     public Student() {}
