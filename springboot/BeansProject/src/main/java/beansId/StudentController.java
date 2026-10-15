@@ -10,10 +10,15 @@ import java.util.List;
 public class StudentController {
 
     private  final StudentRepository studentRepository;
+    private  final  SchoolRepository schoolRepository;
 
-    public StudentController(StudentRepository studentRepository)
+    public StudentController(
+            StudentRepository studentRepository,
+            SchoolRepository schoolRepository
+            )
     {
         this.studentRepository = studentRepository;
+        this.schoolRepository = schoolRepository;
     }
 
 
@@ -68,9 +73,27 @@ public class StudentController {
 
     // student manipulation data
     @PostMapping("/student")
-    public Student createStudent(@RequestBody Student student){
+    public StudentDto createStudent(@RequestBody StudentDto studentDto){
 
-        Student student1 = studentRepository.save(student);
+
+        // find schoolID in database
+        School school = schoolRepository.findById(studentDto.schoolId())
+                .orElseThrow( () -> new RuntimeException
+                        ("there is no school in database with that id: " + studentDto.schoolId())
+                );
+
+
+
+        Student student1 = studentRepository.save();
+
+        // create entity studet
+        student1.setFirstname(studentDto.firstname());
+        student1.setLastname(studentDto.lastname());
+        student1.setEmail(studentDto.email());
+
+        // connect student
+
+
         System.out.println("student id is:  " + student1.getId());
         System.out.println("student firstname is:  " + student1.getFirstname());
         System.out.println("student lastname is " + student1.getLastname());
