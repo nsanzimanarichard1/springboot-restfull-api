@@ -73,44 +73,40 @@ public class StudentController {
 
     // student manipulation data
     @PostMapping("/student")
-    public StudentDto createStudent(@RequestBody StudentDto studentDto){
+    public StudentResponseDto createStudent(
+            @RequestBody StudentDto studentDto) {
 
-
-        // find schoolID in database
+        // Find school using schoolId
         School school = schoolRepository.findById(studentDto.schoolId())
-                .orElseThrow( () -> new RuntimeException
-                        ("there is no school in database with that id: " + studentDto.schoolId())
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "There is no school in database with that id: "
+                                        + studentDto.schoolId()
+                        )
                 );
 
+        // Create Student entity
+        Student student1 = new Student();
 
-
-        Student student1 =  new  Student();
-
-        // create entity student
         student1.setFirstname(studentDto.firstname());
         student1.setLastname(studentDto.lastname());
         student1.setEmail(studentDto.email());
         student1.setSchool(school);
 
-        // connect student and save them to database
+        // Save student
         Student student = studentRepository.save(student1);
 
+        System.out.println("student firstname is: " + student.getFirstname());
+        System.out.println("student lastname is: " + student.getLastname());
+        System.out.println("student email is: " + student.getEmail());
 
-
-
-        System.out.println("student firstname is:  " + student.getFirstname());
-        System.out.println("student lastname is " + student.getLastname());
-        System.out.println("student email is:  " + student.getEmail());
-
-        return new StudentDto(
+        // Return only what we want the user to see
+        return new StudentResponseDto(
                 student.getFirstname(),
                 student.getLastname(),
-                student.getEmail(),
-                student.getId()
+                student.getEmail()
         );
-
     }
-
     // GetAll Student
     @GetMapping("/student/{id}")
     public Student getStudentById( @PathVariable Integer id){
