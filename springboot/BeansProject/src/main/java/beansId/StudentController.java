@@ -84,22 +84,30 @@ public class StudentController {
 
 
 
-        Student student1 = studentRepository.save();
+        Student student1 =  new  Student();
 
-        // create entity studet
+        // create entity student
         student1.setFirstname(studentDto.firstname());
         student1.setLastname(studentDto.lastname());
         student1.setEmail(studentDto.email());
+        student1.setSchool(school);
 
-        // connect student
+        // connect student and save them to database
+        Student student = studentRepository.save(student1);
 
 
-        System.out.println("student id is:  " + student1.getId());
-        System.out.println("student firstname is:  " + student1.getFirstname());
-        System.out.println("student lastname is " + student1.getLastname());
-        System.out.println("student email is:  " + student1.getEmail());
-        System.out.println("Student age is: " + student1.getAge());
-        return student1;
+
+
+        System.out.println("student firstname is:  " + student.getFirstname());
+        System.out.println("student lastname is " + student.getLastname());
+        System.out.println("student email is:  " + student.getEmail());
+
+        return new StudentDto(
+                student.getFirstname(),
+                student.getLastname(),
+                student.getEmail(),
+                student.getId()
+        );
 
     }
 
