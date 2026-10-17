@@ -1,12 +1,15 @@
 package beansId;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.List;
 
 @Service
 public class StudentService {
 
     private final StudentRepository studentRepository;
-    private  final SchoolRepository schoolRepository;
+    private final SchoolRepository schoolRepository;
 
 
     public StudentService(StudentRepository studentRepository, SchoolRepository schoolRepository) {
@@ -47,7 +50,17 @@ public class StudentService {
         );
     }
 
+    // get student by ID
+    public Student getStudentById(Integer id) {
+        return studentRepository.findById(id).orElseThrow(() -> new RuntimeException("student with that id does not exist: " + id));
+
     }
+
+    // get all student
+    public List<Student> getAllStudent(){
+        return studentRepository.findAll();
+    }
+}
 
 
 

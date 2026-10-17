@@ -86,14 +86,15 @@ public class StudentController {
 
     // GetAll Student
     @GetMapping("/student/{id}")
-    public Student getStudentById( @PathVariable Integer id){
-        return studentRepository.findById(id).orElseThrow(() -> new RuntimeException("student with that id does not exist: " + id));
+   public Student findStudentById( @PathVariable Integer id ) {
+        return studentService.getStudentById(id);
+
     }
 
     // getAll student
     @GetMapping("/students")
-    public List<Student> getAllStudent(){
-        return  studentRepository.findAll();
+    public List<Student> PrintAllStudent (){
+        return studentService.getAllStudent();
     }
 
     // Update Student by id
