@@ -1,0 +1,53 @@
+package beansId;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class StudentService {
+
+    private final StudentRepository studentRepository;
+    private  final SchoolRepository schoolRepository;
+
+
+    public StudentService(StudentRepository studentRepository, SchoolRepository schoolRepository) {
+        this.studentRepository = studentRepository;
+        this.schoolRepository = schoolRepository;
+    }
+
+
+    public StudentResponseDto createStudentServiceMethod(StudentDto studentDto) {
+
+        // Find school using schoolId
+        School school = schoolRepository.findById(studentDto.schoolId())
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "There is no school in database with that id: "
+                                        + studentDto.schoolId()
+                        )
+                );
+
+        // Create Student entity
+        Student student1 = new Student();
+
+        student1.setFirstname(studentDto.firstname());
+        student1.setLastname(studentDto.lastname());
+        student1.setEmail(studentDto.email());
+        student1.setSchool(school);
+
+        // Save student
+        Student student = studentRepository.save(student1);
+
+        System.out.println("student lastname is: " + student.getLastname());
+
+        // Return only what we want the user to see
+        return new StudentResponseDto(
+                student.getFirstname(),
+                student.getLastname(),
+                student.getEmail()
+        );
+    }
+
+    }
+
+
+
