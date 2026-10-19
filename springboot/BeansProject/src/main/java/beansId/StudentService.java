@@ -60,7 +60,17 @@ public class StudentService {
     public List<Student> getAllStudent(){
         return studentRepository.findAll();
     }
+
+    // delete student by Id
+    public String deleteStudent(@PathVariable Integer id){
+        Student student = studentRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("student with that id does not exist: " + id)
+        );
+        studentRepository.delete(student);
+        return "Student with ID " + id + " deleted successfully";
+    }
 }
+
 
 
 

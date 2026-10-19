@@ -126,11 +126,8 @@ public class StudentController {
 
     // delete student by id
     @DeleteMapping("/delete/student/{id}")
-    public String deleteStudent(@PathVariable Integer id){
-        Student student = studentRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("student with that id does not exist: " + id)
-        );
-        studentRepository.delete(student);
-        return "Student with ID " + id + " deleted successfully";
+    public String deleteStudentBYId(@PathVariable Integer id){
+        return  studentService.deleteStudent(id);
+
     }
 }
