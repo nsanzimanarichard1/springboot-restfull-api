@@ -2,6 +2,7 @@ package beansId;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -59,6 +60,30 @@ public class StudentService {
     // get all student
     public List<Student> getAllStudent(){
         return studentRepository.findAll();
+    }
+
+    // update by ID
+    public Student updateStudent(Integer id, Student student){
+        Student doesExist =  studentRepository.findById(id)
+                .orElseThrow(
+                        () -> new RuntimeException("student with that id does not exist: " + id)
+                );
+
+        if (student.getFirstname()!=null){
+            doesExist.setFirstname(student.getFirstname());
+        }
+
+        if (student.getLastname()!=null){
+            doesExist.setLastname(student.getLastname());
+        }
+        if (student.getEmail()!=null){
+            doesExist.setEmail(student.getEmail());
+        }
+        if (student.getAge()!=null){
+            doesExist.setAge(student.getAge());
+        }
+
+        return  studentRepository.save(doesExist);
     }
 
     // delete student by Id

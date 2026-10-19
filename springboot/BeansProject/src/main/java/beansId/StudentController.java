@@ -100,28 +100,8 @@ public class StudentController {
     // Update Student by id
 
     @PatchMapping("/update/student/{id}")
-    public Student updateStudent(@PathVariable Integer id, @RequestBody Student student){
-        Student doesExist =  studentRepository.findById(id)
-                .orElseThrow(
-                () -> new RuntimeException("student with that id does not exist: " + id)
-        );
-
-        if (student.getFirstname()!=null){
-            doesExist.setFirstname(student.getFirstname());
-        }
-
-        if (student.getLastname()!=null){
-            doesExist.setLastname(student.getLastname());
-        }
-        if (student.getEmail()!=null){
-            doesExist.setEmail(student.getEmail());
-        }
-        if (student.getAge()!=null){
-            doesExist.setAge(student.getAge());
-        }
-
-
-        return  studentRepository.save(doesExist);
+  public Student updateStudentById(@PathVariable Integer id, @RequestBody Student student) {
+        return studentService.updateStudent(id, student);
     }
 
     // delete student by id
