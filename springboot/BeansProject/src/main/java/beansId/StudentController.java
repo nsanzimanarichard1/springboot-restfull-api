@@ -1,5 +1,6 @@
 package beansId;
 
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -77,7 +78,7 @@ public class StudentController {
     // student manipulation data
     @PostMapping("/student")
     public StudentResponseDto createStudents(
-            @RequestBody StudentDto studentDto ) {
+            @Valid @RequestBody StudentDto studentDto ) {
 
         // call student service here
        return studentService.createStudentServiceMethod(studentDto);
@@ -86,7 +87,7 @@ public class StudentController {
 
     // GetAll Student
     @GetMapping("/student/{id}")
-   public Student findStudentById( @PathVariable Integer id ) {
+   public Student findStudentById( @Valid @PathVariable Integer id ) {
         return studentService.getStudentById(id);
 
     }
