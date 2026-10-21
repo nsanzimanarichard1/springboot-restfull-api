@@ -23,7 +23,7 @@ public class ErrorHandlerMethod {
 
         ValidationErrorResponse response = new ValidationErrorResponse(
                 400,
-                "validation field",
+                "validation failed",
                 errors
         );
 
