@@ -4,16 +4,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private  final CustomUserDetailsService customUserDetailsService;
 
-    public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder, CustomUserDetailsService customUserDetailsService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.customUserDetailsService = customUserDetailsService;
     }
 
     // 1. Register endpoint to save a user with a BCrypt hashed password
@@ -26,5 +30,13 @@ public class AuthController {
         userRepository.save(newUser);
 
         return ResponseEntity.ok("User registered successfully!");
+    }
+
+    // get all users endpoint
+    @GetMapping("/users")
+    public ResponseEntity< List <User> > gerAllUsersCreate (){
+        List<User> users = customUserDetailsService.getAllUsers();
+        return  ResponseEntity.ok(users);
+
     }
 }
