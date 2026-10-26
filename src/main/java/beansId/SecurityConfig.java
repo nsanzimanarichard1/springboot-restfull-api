@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 
 @Configuration
 @EnableWebSecurity
@@ -39,13 +41,14 @@ public class SecurityConfig {
 
         return http.build();
     }
-
+    // for password encorder using bcrybt
     @Bean
     public PasswordEncoder passwordEncoder() {
 
         return new BCryptPasswordEncoder();
     }
 
+    //  provide aunthentication
     @Bean
     public AuthenticationProvider authenticationProvider() {
 
@@ -56,5 +59,13 @@ public class SecurityConfig {
         authProvider.setPasswordEncoder(passwordEncoder());
 
         return authProvider;
+    }
+
+    // for jwt
+    @Bean
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration configuration
+    ) throws Exception {
+        return configuration.getAuthenticationManager();
     }
 }

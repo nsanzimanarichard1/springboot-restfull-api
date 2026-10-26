@@ -1,6 +1,10 @@
 package beansId;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,15 +18,22 @@ public class AuthController {
     private final RoleRepository roleRepository; // Inject RoleRepository
     private final PasswordEncoder passwordEncoder;
     private final CustomUserDetailsService customUserDetailsService;
+    private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
 
     public AuthController(UserRepository userRepository,
                           RoleRepository roleRepository,
                           PasswordEncoder passwordEncoder,
-                          CustomUserDetailsService customUserDetailsService) {
+                          CustomUserDetailsService customUserDetailsService,
+                          AuthenticationManager authenticationManager,
+                          JwtService jwtService) {
+
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
         this.customUserDetailsService = customUserDetailsService;
+        this.authenticationManager = authenticationManager;
+        this.jwtService = jwtService;
     }
 
     // 1. Register endpoint to save a user with a hashed password and a role
@@ -47,5 +58,28 @@ public class AuthController {
     public ResponseEntity<List<User>> getAllUsersCreate() {
         List<User> users = customUserDetailsService.getAllUsers();
         return ResponseEntity.ok(users);
+    }
+
+    // login
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponseDto> login(
+            @RequestBody LoginRequestDto request
+    ) {
+
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.username(),
+                        request.password()
+                )
+        );
+
+        UserDetails userDetails =
+                (UserDetails) authentication.getPrincipal();
+
+        String token = jwtService.generateToken(userDetails);
+
+        return ResponseEntity.ok(
+                new LoginResponseDto(token)
+        );
     }
 }
