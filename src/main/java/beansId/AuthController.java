@@ -62,24 +62,65 @@ public class AuthController {
 
     // login
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDto> login(
+    public ResponseEntity<String> login(
             @RequestBody LoginRequestDto request
     ) {
+        System.out.println("LOGIN USERNAME = [" + request.username() + "]");
+        System.out.println("LOGIN PASSWORD LENGTH = " +
+                (request.password() == null ? "null" : request.password().length()));
 
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.username(),
-                        request.password()
-                )
-        );
+        Authentication authentication =
+                authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(
+                                request.username(),
+                                request.password()
+                        )
+                );
+
+        System.out.println("AUTHENTICATION SUCCESSFUL");
 
         UserDetails userDetails =
                 (UserDetails) authentication.getPrincipal();
 
+        System.out.println("USER DETAILS USERNAME = [" +
+                userDetails.getUsername() + "]");
+
         String token = jwtService.generateToken(userDetails);
 
+        System.out.println("JWT GENERATED");
+
+        return ResponseEntity.ok("Your token Generated, verify: "+token);
+    }
+    // testing login
+    @GetMapping("/test-password")
+    public ResponseEntity<String> testPassword() {
+
+        User user = userRepository.findByUsername("test")
+                .orElseThrow(() -> new RuntimeException("test user not found"));
+
+        boolean matches = passwordEncoder.matches(
+                "test1234",
+                user.getPassword()
+        );
+
+        return ResponseEntity.ok("Password matches: " + matches);
+    }
+
+    //test aunthentication
+    @GetMapping("/test-authentication")
+    public ResponseEntity<String> testAuthentication() {
+
+        Authentication authentication =
+                authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(
+                                "test",
+                                "test1234"
+                        )
+                );
+
         return ResponseEntity.ok(
-                new LoginResponseDto(token)
+                "Authentication successful: "
+                        + authentication.getName()
         );
     }
 }
